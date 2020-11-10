@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {trace} from '../../server/api'
 
 const GET_CART = 'GET_CART'
 const ADD_ITEM = 'ADD_ITEM'
@@ -57,6 +56,14 @@ export const fetchPendings = userId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/cart/${userId}`)
+      let cart = []
+      data.map(item => {
+        cart.push({
+          quantity: item.quantity,
+          product: item.product
+        })
+      })
+      dispatch(getCart(cart))
     } catch (error) {
       console.error('There was an error fetching the cart')
     }

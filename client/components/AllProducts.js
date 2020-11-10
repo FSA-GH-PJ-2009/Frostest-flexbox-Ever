@@ -5,8 +5,11 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/allProducts'
 
 class AllProducts extends Component {
+  componentDidMount() {
+    this.props.fetchProducts()
+  }
   render() {
-    const {products, fetchProducts} = this.props
+    const {products} = this.props
     return (
       <div className="all-products-component">
         <h1>All Noodles</h1>

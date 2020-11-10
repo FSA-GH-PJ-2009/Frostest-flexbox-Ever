@@ -12,7 +12,7 @@ const User = db.define('user', {
     allowNull: false
   },
   idAdmin: {
-    type: Sequalize.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     defaultValue: false
   },
   email: {

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {Product} from '../../server/db/models'
 
 //INIT STATE
 const initState = []

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {trace} from '../../server/api'
 
 const GET_CART = 'GET_CART'
 const ADD_ITEM = 'ADD_ITEM'
@@ -10,7 +11,7 @@ Initial state
 *
 */
 //Actual default
-//const defaultCart = []
+const defaultCart = {}
 
 //testing default
 /*
@@ -46,11 +47,21 @@ const removeItem = item => ({
   item
 })
 
-const modifyQuant = (item, quant) => ({
+const modifyQuant = (item, quantity) => ({
   type: REMOVE_ITEM,
   item,
-  quant
+  quantity
 })
+
+export const fetchPendings = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/cart/${userId}`)
+    } catch (error) {
+      console.error('There was an error fetching the cart')
+    }
+  }
+}
 
 export default function(state = defaultCart, action) {
   let newState
@@ -75,7 +86,7 @@ export default function(state = defaultCart, action) {
         } else {
           newState[key] = {
             ...state[key],
-            quant: action.quant
+            quantity: action.quantity
           }
         }
       })

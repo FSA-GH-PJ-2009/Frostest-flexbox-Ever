@@ -1,21 +1,65 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {Product, User, Pending} = require('../server/db/models')
+const faker = require('faker')
+
+const productMaker = () => ({
+  name: `${faker.commerce.productName()} Noodles`,
+  description: faker.commerce.productDescription(),
+  inventory: Math.floor(Math.random() * 100),
+  imageUrl: faker.image.food(),
+  price: Number(faker.commerce.price())
+})
+
+const userMaker = () => ({
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  imageUrl: faker.internet.avatar(),
+  password: faker.internet.password(),
+  isAdmin: false
+})
+const adminMaker = () => ({
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  imageUrl: faker.internet.avatar(),
+  password: faker.internet.password(),
+  isAdmin: true
+})
+const pendingMaker = () => ({
+  quantity: Math.floor(Math.random() * 100),
+  productId: Math.floor(Math.random() * 99) + 1,
+  userId: Math.floor(Math.random() * 49) + 1
+})
+
+const seedProducts = []
+const seedUsers = []
+const seedPending = []
+
+const populateSeeds = () => {
+  for (let i = 1; i < 101; i++) {
+    seedProducts.push(productMaker())
+  }
+  for (let i = 1; i < 51; i++) {
+    seedUsers.push(userMaker())
+  }
+  for (let i = 1; i < 51; i++) {
+    seedPending.push(pendingMaker())
+  }
+  seedUsers.push(adminMaker())
+}
+
+populateSeeds()
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  /*
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
-
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  */
+  await Promise.all(seedProducts.map(product => Product.create(product)))
+  await Promise.all(seedUsers.map(user => User.create(user)))
+  await Promise.all(seedPending.map(pending => Pending.create(pending)))
+  console.log('Database successfully seeded 🍜')
 }
 
 // We've separated the `seed` function from the `runSeed` function.

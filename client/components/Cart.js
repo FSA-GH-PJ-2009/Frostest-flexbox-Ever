@@ -23,7 +23,6 @@ export class ShoppingCart extends React.Component {
   render() {
     return (
       <div className="cart">
-        <h2>Shopping cart for User #6!</h2>
         {this.props.cart.length > 0 ? (
           <div className="pending-products">
             {this.props.cart.map(item => (

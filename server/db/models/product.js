@@ -13,6 +13,13 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  price: {
+    type: Sequelize.DECIMAL(10, 2),
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
   inventory: {
     type: Sequelize.INTEGER,
     allowNull: false,

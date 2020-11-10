@@ -13,6 +13,7 @@ Initial state
 //const defaultCart = []
 
 //testing default
+/*
 const defaultCart = {
   1: {
     name: 'zoodles',
@@ -25,6 +26,7 @@ const defaultCart = {
     imageUrl: ''
   }
 }
+*/
 
 /*
 *ACTION CREATORS

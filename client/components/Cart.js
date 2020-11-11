@@ -28,13 +28,17 @@ export class ShoppingCart extends React.Component {
   }
 
   async modQuant(item, mod) {
-    await this.props.updateQuantity(item.id, item.quantity + mod)
+    await this.props.updateQuantity(
+      item.id,
+      item.quantity + mod,
+      this.props.userId
+    )
     this.setState({
       total: this.state.total + mod * item.product.price
     })
   }
   async handleRemove(item) {
-    await this.props.removeItem(item.id)
+    await this.props.removeItem(item.id, this.props.userId)
     this.setState({
       total: this.state.total - item.quantity * item.product.price
     })
@@ -73,7 +77,8 @@ export class ShoppingCart extends React.Component {
 
 const mapState = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    userId: state.user.id
   }
 }
 

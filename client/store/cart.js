@@ -1,7 +1,8 @@
 import axios from 'axios'
+import {UPDATE} from 'sequelize/types/lib/query-types'
 
+const UPDATE_CART = 'UPDATE_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
-const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const MODIFY_QUANT = 'MODIFY_QUANT'
 
@@ -14,14 +15,14 @@ const defaultCart = []
 /*
 *ACTION CREATORS
 */
-const addToCart = cart => ({
-  type: ADD_TO_CART,
+const updateCart = cart => ({
+  type: UPDATE_CART,
   cart
 })
 
-const addItem = item => ({
-  type: ADD_ITEM,
-  item
+const addToCart = cart => ({
+  type: ADD_TO_CART,
+  cart
 })
 
 const removeItem = item => ({
@@ -54,27 +55,40 @@ export const fetchPendings = userId => {
   }
 }
 
-export const updateQuantity = (itemId, quantity) => {
+export const updateQuantity = (itemId, quantity, userId) => {
   return async dispatch => {
-    await axios.put(`/api/cart/${itemId}`, {quantity})
+    if (userId) await axios.put(`/api/cart/${itemId}`, {quantity})
     dispatch(modifyQuant(itemId, quantity))
   }
 }
 
-export const deleteItem = itemId => {
+export const deleteItem = (itemId, userId) => {
   return async dispatch => {
-    await axios.delete(`/api/cart/${itemId}`)
+    if (userId) await axios.delete(`/api/cart/${itemId}`)
     dispatch(removeItem(itemId))
+  }
+}
+
+export const loginUpdateCart = (cart, userId) => {
+  return async dipsatch => {
+    let newItem
+    const newCart = cart.map(async item => {
+      newItem = await axios.put(`/api/cart/${itemId}`, {
+        userId
+      })
+      return newItem.data
+    })
+    dispatch(updateCart(newCart))
   }
 }
 
 export default function(state = defaultCart, action) {
   let newState
   switch (action.type) {
+    case UPDATE_CART:
+      return action.cart
     case ADD_TO_CART:
       return [...state, ...action.cart]
-    case ADD_ITEM:
-      return state
     case REMOVE_ITEM:
       return state.filter(item => {
         return item.id != action.item

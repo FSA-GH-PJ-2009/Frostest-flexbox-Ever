@@ -28,6 +28,27 @@ router.put('/:itemId', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    const newPending = await Pending.findOrCreate({
+      where: {
+        userId: req.body.userId,
+        productId: req.body.productId
+      },
+      include: {
+        model: Product
+      }
+    })
+    const prevQuant = newPending.quantity
+    await newPending.update({
+      quantity: prevQuant + 1
+    })
+    res.status(201).json(newPending)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:itemId', async (req, res, next) => {
   try {
     const id = req.params.itemId

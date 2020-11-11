@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-//INIT STATE
-const initState = {}
-
 //ACTION TYPES
 const SET_PRODUCT = 'SET_PRODUCT'
 
@@ -16,14 +13,15 @@ const setProduct = product => ({
 export const fetchProduct = productId => {
   return async dispatch => {
     try {
-      const {data: product} = await axios.get(`/api/products/${productId}`)
-      dispatch(setProduct(product))
+      const {data} = await axios.get(`/api/products/${productId}`)
+      dispatch(setProduct(data))
     } catch (error) {
-      console.error('ERROR fetching product!')
+      console.error(error)
     }
   }
 }
-
+//INIT STATE
+const initState = []
 //REDUCER
 export default function productReducer(state = initState, action) {
   switch (action.type) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, updateQuantity, deleteItem} from '../store/cart'
+import {me} from '../store/user'
 
 export class ShoppingCart extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class ShoppingCart extends React.Component {
   }
 
   async componentDidMount() {
+    await this.props.fetchUser()
     await this.props.getCart(this.props.userId)
     this.calcTotal()
   }
@@ -85,8 +87,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getCart: userId => dispatch(fetchCart(userId)),
-    updateQuantity: (itemId, quant) => dispatch(updateQuantity(itemId, quant)),
-    removeItem: itemId => dispatch(deleteItem(itemId))
+    updateQuantity: (itemId, quant, userId) =>
+      dispatch(updateQuantity(itemId, quant, userId)),
+    removeItem: (itemId, userId) => dispatch(deleteItem(itemId, userId)),
+    fetchUser: () => dispatch(me())
   }
 }
 

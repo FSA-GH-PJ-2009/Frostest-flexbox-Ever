@@ -20,7 +20,17 @@ class AllProducts extends Component {
               <div key={product.id} className="product">
                 <img className="product-img" src={product.imageUrl} />
                 <Link to={`/products/${product.id}`}>{product.name}</Link>
-                <button type="submit">Add to Cart</button>
+                <button
+                  onClick={() => {
+                    this.props.addToCart(
+                      product,
+                      this.props.userId,
+                      this.props.cart
+                    )
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
             )
           })}
@@ -31,11 +41,14 @@ class AllProducts extends Component {
 }
 
 const mapState = state => ({
-  products: state.allProducts
+  products: state.allProducts,
+  cart: state.cart,
+  userId: state.user.id
 })
 
 const mapDispatch = dispatch => ({
-  fetchProducts: () => dispatch(fetchProducts())
+  fetchProducts: () => dispatch(fetchProducts()),
+  addToCart: (item, userId, cart) => dispatch(addItem(item, userId, cart))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)

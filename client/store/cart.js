@@ -38,16 +38,18 @@ const modifyQuant = (item, quantity) => ({
 export const fetchCart = userId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/cart/${userId}`)
-      let cart = []
-      data.map(item => {
-        cart.push({
-          id: item.id,
-          quantity: item.quantity,
-          product: item.product
+      if (userId) {
+        const {data} = await axios.get(`/api/cart/${userId}`)
+        let cart = []
+        data.map(item => {
+          cart.push({
+            id: item.id,
+            quantity: item.quantity,
+            product: item.product
+          })
         })
-      })
-      dispatch(addToCart(cart))
+        dispatch(updateCart(cart))
+      }
     } catch (error) {
       console.error('There was an error fetching the cart')
     }
@@ -85,16 +87,16 @@ export const addItem = (item, userId, cart) => {
           orderId = cartItem.id
         }
       })
+      dispatch(
+        addToCart([
+          {
+            id: orderId,
+            quantity: 1, //only add 1 to the store total
+            product: item
+          }
+        ])
+      )
     }
-    dispatch(
-      addToCart([
-        {
-          id: order.id,
-          quantity: 1, //only add 1 to the store total
-          product: item
-        }
-      ])
-    )
   }
 }
 
@@ -116,11 +118,10 @@ export default function(state = defaultCart, action) {
   switch (action.type) {
     case UPDATE_CART:
       return action.cart
-
     case ADD_TO_CART:
       newState = [...state]
       let newItem
-      for (i = 0; i < toAdd.length; i++) {
+      for (i = 0; i < action.cart.length; i++) {
         newItem = true
         for (j = 0; j < newState.length; j++) {
           if (newState[j].id == action.cart[i].id) {

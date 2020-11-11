@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const GET_CART = 'GET_CART'
+const ADD_TO_CART = 'ADD_TO_CART'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const MODIFY_QUANT = 'MODIFY_QUANT'
@@ -9,30 +9,13 @@ const MODIFY_QUANT = 'MODIFY_QUANT'
 Initial state
 *
 */
-//Actual default
-const defaultCart = {}
-
-//testing default
-/*
-const defaultCart = {
-  1: {
-    name: 'zoodles',
-    quant: 2,
-    imageUrl: ''
-  },
-  2: {
-    name: 'whole wheat noodles',
-    quant: 1,
-    imageUrl: ''
-  }
-}
-*/
+const defaultCart = []
 
 /*
 *ACTION CREATORS
 */
-const getCart = cart => ({
-  type: GET_CART,
+const addToCart = cart => ({
+  type: ADD_TO_CART,
   cart
 })
 
@@ -64,7 +47,7 @@ export const fetchPendings = userId => {
           product: item.product
         })
       })
-      dispatch(getCart(cart))
+      dispatch(addToCart(cart))
     } catch (error) {
       console.error('There was an error fetching the cart')
     }
@@ -73,19 +56,29 @@ export const fetchPendings = userId => {
 
 export const updateQuantity = (itemId, quantity) => {
   return async dispatch => {
+    await axios.put(`/api/cart/${itemId}`, {quantity})
     dispatch(modifyQuant(itemId, quantity))
+  }
+}
+
+export const deleteItem = itemId => {
+  return async dispatch => {
+    await axios.delete(`/api/cart/${itemId}`)
+    dispatch(removeItem(itemId))
   }
 }
 
 export default function(state = defaultCart, action) {
   let newState
   switch (action.type) {
-    case GET_CART:
-      return action.cart
+    case ADD_TO_CART:
+      return [...state, ...action.cart]
     case ADD_ITEM:
       return state
     case REMOVE_ITEM:
-      return state
+      return state.filter(item => {
+        return item.id != action.item
+      })
     case MODIFY_QUANT:
       newState = []
       state.map(item => {

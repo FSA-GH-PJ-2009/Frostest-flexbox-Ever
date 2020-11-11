@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchPendings, updateQuantity} from '../store/cart'
+import {fetchPendings, updateQuantity, deleteItem} from '../store/cart'
 
 export class ShoppingCart extends React.Component {
   constructor(props) {
@@ -9,6 +9,7 @@ export class ShoppingCart extends React.Component {
       total: 0
     }
     this.modQuant = this.modQuant.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
   }
 
   calcTotal() {
@@ -32,6 +33,12 @@ export class ShoppingCart extends React.Component {
       total: this.state.total + mod * item.product.price
     })
   }
+  async handleRemove(item) {
+    await this.props.removeItem(item.id)
+    this.setState({
+      total: this.state.total - item.quantity * item.product.price
+    })
+  }
   render() {
     return (
       <div className="cart">
@@ -47,13 +54,16 @@ export class ShoppingCart extends React.Component {
                     <button onClick={() => this.modQuant(item, -1)}>-</button>
                     <h6>{`Quantity: ${item.quantity}`}</h6>
                     <button onClick={() => this.modQuant(item, 1)}>+</button>
+                    <button onClick={() => this.handleRemove(item)}>
+                      Remove from cart
+                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <h2>Shopping cart loading</h2>
+          <h2>Shopping cart is empty</h2>
         )}
         <h4>{`total: ${this.state.total}`}</h4>
       </div>
@@ -70,7 +80,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getCart: () => dispatch(fetchPendings(6)),
-    updateQuantity: (item, quant) => dispatch(updateQuantity(item, quant))
+    updateQuantity: (itemId, quant) => dispatch(updateQuantity(itemId, quant)),
+    removeItem: itemId => dispatch(deleteItem(itemId))
   }
 }
 

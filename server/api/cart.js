@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const {Tracker} = require('../../../../async/moodTracker/server/db/models')
 const {Pending, Product} = require('../db/models')
 
 router.get('/:userId', async (req, res, next) => {

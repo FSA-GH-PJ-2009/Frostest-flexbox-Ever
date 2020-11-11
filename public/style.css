@@ -79,3 +79,13 @@ form div {
 .logo {
   width: 150px;
 }
+
+/* WELCOME */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.welcome-img {
+  height: 650px;
+}

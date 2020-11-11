@@ -15,6 +15,8 @@ Here at Mork and Jonesy's Spicy Noodle Emporium, we have a huge selection of all
 
 ### Deployment Link
 
+http://spicynoodleemporium.herokuapp.com/
+
 ### Zoom Room
 
 https://fullstackacademy.zoom.us/j/3228421805?pwd=bzhWWXprK1JOWTFDTTcxUW04SFNtdz09

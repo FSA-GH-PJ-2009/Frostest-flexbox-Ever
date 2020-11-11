@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {UPDATE} from 'sequelize/types/lib/query-types'
 
 const UPDATE_CART = 'UPDATE_CART'
 const ADD_TO_CART = 'ADD_TO_CART'

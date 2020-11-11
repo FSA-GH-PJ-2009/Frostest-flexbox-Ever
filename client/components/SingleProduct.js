@@ -4,11 +4,15 @@ import {connect} from 'react-redux'
 import {fetchProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   componentDidMount() {
     this.props.getProduct(this.props.match.params.productId)
   }
 
   render() {
+    console.log(this.props)
     const {product} = this.props
     return (
       <div key={product.id} className="product">
@@ -22,7 +26,7 @@ class SingleProduct extends React.Component {
 }
 
 const mapState = state => ({
-  product: state.product
+  product: state.singleProduct
 })
 
 const mapDispatch = dispatch => ({

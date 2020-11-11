@@ -47,7 +47,7 @@ const removeItem = item => ({
 })
 
 const modifyQuant = (item, quantity) => ({
-  type: REMOVE_ITEM,
+  type: MODIFY_QUANT,
   item,
   quantity
 })
@@ -59,6 +59,7 @@ export const fetchPendings = userId => {
       let cart = []
       data.map(item => {
         cart.push({
+          id: item.id,
           quantity: item.quantity,
           product: item.product
         })
@@ -70,34 +71,31 @@ export const fetchPendings = userId => {
   }
 }
 
+export const updateQuantity = (itemId, quantity) => {
+  return async dispatch => {
+    dispatch(modifyQuant(itemId, quantity))
+  }
+}
+
 export default function(state = defaultCart, action) {
   let newState
   switch (action.type) {
     case GET_CART:
       return action.cart
     case ADD_ITEM:
-      return {...state, [action.item]: 1}
+      return state
     case REMOVE_ITEM:
-      newState = {}
-      Object.keys(state).map(key => {
-        if (key != action.item) {
-          newState[key] = state[key]
+      return state
+    case MODIFY_QUANT:
+      newState = []
+      state.map(item => {
+        if (item.id != action.item) {
+          newState.push(item)
+        } else {
+          newState.push({...item, quantity: action.quantity})
         }
       })
       return newState
-    case MODIFY_QUANT:
-      newState = {}
-      Object.keys(state).map(key => {
-        if (key != action.item) {
-          newState[key] = state[key]
-        } else {
-          newState[key] = {
-            ...state[key],
-            quantity: action.quantity
-          }
-        }
-      })
-
     default:
       return state
   }

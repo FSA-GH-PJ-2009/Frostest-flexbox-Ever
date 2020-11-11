@@ -19,3 +19,30 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.cart {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pending-products {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-pending {
+  display: flex;
+}
+.single-pending img {
+  width: 20%;
+  height: 50%;
+}
+
+.pending-quantity {
+  display: flex;
+  flex-direction: row;
+}
+.pending-quantity button {
+  width: 10%;
+  height: 10%;
+}

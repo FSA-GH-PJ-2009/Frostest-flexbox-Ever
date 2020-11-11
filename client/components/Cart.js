@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchPendings, updateQuantity, deleteItem} from '../store/cart'
+import {fetchCart, updateQuantity, deleteItem} from '../store/cart'
 
 export class ShoppingCart extends React.Component {
   constructor(props) {
@@ -84,7 +84,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getCart: () => dispatch(fetchPendings(6)),
+    getCart: () => dispatch(fetchCart(6)),
     updateQuantity: (itemId, quant) => dispatch(updateQuantity(itemId, quant)),
     removeItem: itemId => dispatch(deleteItem(itemId))
   }

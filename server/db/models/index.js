@@ -1,15 +1,15 @@
 const User = require('./user')
 const Product = require('./product')
-const Pending = require('./pending')
+const Order = require('./order')
 
-User.hasMany(Pending)
-Pending.belongsTo(User)
+User.hasMany(Order)
+Order.belongsTo(User)
 
-Product.hasMany(Pending)
-Pending.belongsTo(Product)
+Product.hasMany(Order)
+Order.belongsTo(Product)
 
 module.exports = {
   User,
   Product,
-  Pending
+  Order
 }

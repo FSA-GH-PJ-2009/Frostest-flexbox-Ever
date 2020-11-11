@@ -29,7 +29,7 @@ router.put('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newOrder = await Order.findOrCreate({
+    const [newOrder, wasCreated] = await Order.findOrCreate({
       where: {
         userId: req.body.userId,
         productId: req.body.productId

@@ -38,16 +38,18 @@ const modifyQuant = (item, quantity) => ({
 export const fetchCart = userId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/cart/${userId}`)
-      let cart = []
-      data.map(item => {
-        cart.push({
-          id: item.id,
-          quantity: item.quantity,
-          product: item.product
+      if (userId) {
+        const {data} = await axios.get(`/api/cart/${userId}`)
+        let cart = []
+        data.map(item => {
+          cart.push({
+            id: item.id,
+            quantity: item.quantity,
+            product: item.product
+          })
         })
-      })
-      dispatch(addToCart(cart))
+        dispatch(updateCart(cart))
+      }
     } catch (error) {
       console.error('There was an error fetching the cart')
     }
@@ -68,6 +70,36 @@ export const deleteItem = (itemId, userId) => {
   }
 }
 
+export const addItem = (item, userId, cart) => {
+  return async dispatch => {
+    const productId = item.id
+    let orderId = cart.length > 0 ? cart[cart.length - 1].id + 1 : 0
+
+    if (userId) {
+      let order = await axios.post('/api/cart', {
+        userId,
+        productId
+      })
+      orderId = order.id
+    } else {
+      cart.map(cartItem => {
+        if (cartItem.product.id == productId) {
+          orderId = cartItem.id
+        }
+      })
+      dispatch(
+        addToCart([
+          {
+            id: orderId,
+            quantity: 1, //only add 1 to the store total
+            product: item
+          }
+        ])
+      )
+    }
+  }
+}
+
 export const loginUpdateCart = (cart, userId) => {
   return async dipsatch => {
     let newItem
@@ -82,12 +114,25 @@ export const loginUpdateCart = (cart, userId) => {
 }
 
 export default function(state = defaultCart, action) {
-  let newState
+  let newState, i, j, toAdd
   switch (action.type) {
     case UPDATE_CART:
       return action.cart
     case ADD_TO_CART:
-      return [...state, ...action.cart]
+      newState = [...state]
+      let newItem
+      for (i = 0; i < action.cart.length; i++) {
+        newItem = true
+        for (j = 0; j < newState.length; j++) {
+          if (newState[j].id == action.cart[i].id) {
+            newItem = false
+            newState[j].quantity += action.cart[i].quantity
+          }
+        }
+        if (newItem) newState.push(action.cart[i])
+      }
+      return newState
+
     case REMOVE_ITEM:
       return state.filter(item => {
         return item.id != action.item

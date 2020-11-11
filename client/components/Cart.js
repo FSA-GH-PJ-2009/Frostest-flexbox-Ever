@@ -23,7 +23,7 @@ export class ShoppingCart extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.getCart()
+    await this.props.getCart(this.props.userId)
     this.calcTotal()
   }
 
@@ -84,7 +84,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getCart: () => dispatch(fetchCart(6)),
+    getCart: userId => dispatch(fetchCart(userId)),
     updateQuantity: (itemId, quant) => dispatch(updateQuantity(itemId, quant)),
     removeItem: itemId => dispatch(deleteItem(itemId))
   }

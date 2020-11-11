@@ -42,6 +42,7 @@ form div {
   display: flex;
   flex-direction: row;
 }
+
 .pending-quantity button {
   width: 10%;
   height: 10%;

@@ -62,3 +62,15 @@ form div {
 .login-button {
   align-self: center;
 }
+
+/* NAV BAR */
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: lightgray;
+}
+
+.logo {
+  width: 150px;
+}

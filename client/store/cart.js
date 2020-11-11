@@ -35,7 +35,7 @@ const modifyQuant = (item, quantity) => ({
   quantity
 })
 
-export const fetchPendings = userId => {
+export const fetchCart = userId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/cart/${userId}`)

@@ -43,11 +43,6 @@ form div {
   flex-direction: row;
 }
 
-.pending-quantity button {
-  width: 10%;
-  height: 10%;
-}
-
 /* AUTH FORM */
 
 .auth-form-container {

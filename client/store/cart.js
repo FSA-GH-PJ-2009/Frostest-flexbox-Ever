@@ -38,7 +38,6 @@ const modifyQuant = (item, quantity) => ({
 export const fetchCart = userId => {
   return async dispatch => {
     try {
-      console.log('userId: ', userId)
       if (userId) {
         const {data: cart} = await axios.get(`/api/cart/${userId}`)
         dispatch(updateCart(cart))

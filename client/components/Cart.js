@@ -87,8 +87,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getCart: userId => dispatch(fetchCart(userId)),
-    updateQuantity: (itemId, quant) => dispatch(updateQuantity(itemId, quant)),
-    removeItem: itemId => dispatch(deleteItem(itemId)),
+    updateQuantity: (itemId, quant, userId) =>
+      dispatch(updateQuantity(itemId, quant, userId)),
+    removeItem: (itemId, userId) => dispatch(deleteItem(itemId, userId)),
     fetchUser: () => dispatch(me())
   }
 }

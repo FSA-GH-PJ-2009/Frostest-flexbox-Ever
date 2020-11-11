@@ -29,7 +29,6 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.TEXT,
-    allowNull: false,
     defaultValue:
       'https://i.pinimg.com/564x/60/2c/4c/602c4c1c00ee884ea63c78b68aeb935c.jpg',
     validate: {

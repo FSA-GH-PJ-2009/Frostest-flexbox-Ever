@@ -1,10 +1,9 @@
 const router = require('express').Router()
-const {Tracker} = require('../../../../async/moodTracker/server/db/models')
-const {Pending, Product} = require('../db/models')
+const {Order, Product} = require('../db/models')
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const cart = await Pending.findAll({
+    const cart = await Order.findAll({
       where: {
         userId: req.params.userId
       },
@@ -20,7 +19,7 @@ router.get('/:userId', async (req, res, next) => {
 
 router.put('/:itemId', async (req, res, next) => {
   try {
-    const item = await Pending.findByPk(req.params.itemId)
+    const item = await Order.findByPk(req.params.itemId)
     await item.update(req.body)
     res.status(200).json(item)
   } catch (error) {
@@ -30,7 +29,7 @@ router.put('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newPending = await Pending.findOrCreate({
+    const newOrder = await Order.findOrCreate({
       where: {
         userId: req.body.userId,
         productId: req.body.productId
@@ -39,11 +38,11 @@ router.post('/', async (req, res, next) => {
         model: Product
       }
     })
-    const prevQuant = newPending.quantity
-    await newPending.update({
+    const prevQuant = newOrder.quantity
+    await newOrder.update({
       quantity: prevQuant + 1
     })
-    res.status(201).json(newPending)
+    res.status(201).json(newOrder)
   } catch (error) {
     next(error)
   }
@@ -52,7 +51,7 @@ router.post('/', async (req, res, next) => {
 router.delete('/:itemId', async (req, res, next) => {
   try {
     const id = req.params.itemId
-    await Pending.destroy({
+    await Order.destroy({
       where: {
         id
       }

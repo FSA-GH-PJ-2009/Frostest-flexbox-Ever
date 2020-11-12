@@ -16,17 +16,25 @@ class SingleProduct extends React.Component {
     console.log(this.props)
     const {product} = this.props
     return (
-      <div key={product.id} className="product">
-        <img className="product-img" src={product.imageUrl} />
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <button
+
+      <div key={product.id} className="single-product-container">
+        <div className="single-product">
+          <img className="single-product-img" src={product.imageUrl} />
+          <div className="single-product-info">
+            <div className="single-product-text">
+              <h2>{product.name}</h2>
+              <p>{product.description}</p>
+            </div>
+          <button
           onClick={() => {
             this.props.addToCart(product, this.props.userId, this.props.cart)
           }}
         >
           Add to Cart
         </button>
+          </div>
+        </div>
+
       </div>
     )
   }

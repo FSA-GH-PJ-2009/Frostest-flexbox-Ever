@@ -58,7 +58,7 @@ export const fetchCart = userId => {
 
 export const updateQuantity = (itemId, quantity, userId) => {
   return async dispatch => {
-    if (userId) await axios.put(`/api/cart/${itemId}`, {quantity})
+    if (userId) await axios.put(`/api/cart/item/${itemId}`, {quantity})
     dispatch(modifyQuant(itemId, quantity))
   }
 }
@@ -99,21 +99,6 @@ export const addItem = (item, userId, cart) => {
     }
   }
 }
-
-/*
-export const loginUpdateCart = (cart, userId) => {
-  return async dipsatch => {
-    let newItem
-    const newCart = cart.map(async item => {
-      newItem = await axios.put(`/api/cart/${itemId}`, {
-        userId
-      })
-      return newItem.data
-    })
-    dispatch(updateCart(newCart))
-  }
-}
-*/
 
 export default function(state = defaultCart, action) {
   let newState, i, j, toAdd

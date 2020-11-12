@@ -20,11 +20,40 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/:itemId', async (req, res, next) => {
+router.put('item/:itemId', async (req, res, next) => {
+  console.log('still here?!?!?!')
   try {
     const item = await Pending.findByPk(req.params.itemId)
     await item.update(req.body)
     res.status(200).json(item)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/login', async (req, res, next) => {
+  try {
+    const {cart, userId} = req.body
+    const [currentOrder, newOrder] = await Order.findOrCreate({
+      where: {
+        userId,
+        orderDate: null
+      }
+    })
+    const orderId = currentOrder.id
+    await cart.map(async item => {
+      const [currentPending, newPending] = await Pending.findOrCreate({
+        where: {
+          orderId,
+          productId: item.product.id
+        }
+      })
+      const prevQuant = currentPending.quantity
+      await currentPending.update({
+        quantity: prevQuant + item.quantity
+      })
+    })
+    res.status(201).send()
   } catch (error) {
     next(error)
   }

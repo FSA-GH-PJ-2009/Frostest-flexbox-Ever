@@ -31,6 +31,7 @@ class Checkout extends Component {
   // HOPE: WRITE THIS FUNC
 
   render() {
+    const {user} = this.req
     const {cart} = this.props
     return (
       <div>
@@ -57,14 +58,58 @@ class Checkout extends Component {
           </div>
         )}
         <form className="checkout-form" onSubmit={this.handleCheckout}>
-          <label>First Name:</label>
-          <input
-            className="input-box"
-            type="text"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.handleChange}
-          />
+          <div>
+            <label>First Name:</label>
+            <input
+              className="input-box"
+              type="text"
+              name="firstName"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <input
+              className="input-box"
+              type="text"
+              name="lastName"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label>Card Number:</label>
+            <input
+              className="input-box"
+              type="text"
+              name="cardNumber"
+              value={this.state.cardNumber}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label>Address:</label>
+            <input
+              className="input-box"
+              type="text"
+              name="address"
+              value={this.state.address}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label>Zip Code:</label>
+            <input
+              className="input-box"
+              type="text"
+              name="zipCode"
+              value={this.state.zipCode}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button type="submit">Complete Purchase</button>
+
           {/* HOPE:FINISH WRITING FORM */}
         </form>
       </div>

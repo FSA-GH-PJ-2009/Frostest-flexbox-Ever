@@ -21,7 +21,6 @@ router.get('/:userId', async (req, res, next) => {
 })
 
 router.put('item/:itemId', async (req, res, next) => {
-  console.log('still here?!?!?!')
   try {
     const item = await Pending.findByPk(req.params.itemId)
     await item.update(req.body)

@@ -97,7 +97,7 @@ const actualProducts = [
 ]
 
 const productMaker = () => ({
-  name: `${faker.commerce.productName()} Noodles`,
+  name: `${faker.hacker.adjective()} noodles`,
   description: faker.commerce.productDescription(),
   inventory: Math.floor(Math.random() * 100),
   price: Number(faker.commerce.price())

@@ -19,8 +19,11 @@ class AllProducts extends Component {
             return (
               <div key={product.id} className="product">
                 <img className="product-img" src={product.imageUrl} />
-                <Link to={`/products/${product.id}`}>{product.name}</Link>
+                <Link className="noodle-name" to={`/products/${product.id}`}>
+                  {product.name}
+                </Link>
                 <button
+                  type="submit"
                   onClick={() => {
                     this.props.addToCart(
                       product,

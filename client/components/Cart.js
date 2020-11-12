@@ -48,7 +48,7 @@ export class ShoppingCart extends React.Component {
   render() {
     return (
       <div className="cart">
-        {this.props.cart.length > 0 ? (
+        {this.props.cart ? (
           <div className="pending-products">
             {this.props.cart.map(item => (
               <div className="single-pending" key={item.id}>

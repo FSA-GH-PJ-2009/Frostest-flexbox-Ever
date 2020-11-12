@@ -100,7 +100,6 @@ const productMaker = () => ({
   name: `${faker.commerce.productName()} Noodles`,
   description: faker.commerce.productDescription(),
   inventory: Math.floor(Math.random() * 100),
-  imageUrl: faker.image.food(),
   price: Number(faker.commerce.price())
 })
 

@@ -4,6 +4,7 @@ const UPDATE_CART = 'UPDATE_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const MODIFY_QUANT = 'MODIFY_QUANT'
+const CLEAR_CART = 'CLEAR_CART'
 
 /*
 Initial state
@@ -27,6 +28,10 @@ const addToCart = cart => ({
 const removeItem = item => ({
   type: REMOVE_ITEM,
   item
+})
+
+export const clearCart = () => ({
+  type: CLEAR_CART
 })
 
 const modifyQuant = (item, quantity) => ({
@@ -144,6 +149,8 @@ export default function(state = defaultCart, action) {
         }
       })
       return newState
+    case CLEAR_CART:
+      return []
     default:
       return state
   }

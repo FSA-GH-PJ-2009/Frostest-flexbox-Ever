@@ -222,3 +222,32 @@ nav a {
   align-items: flex-start;
   justify-content: space-between;
 }
+
+/* CHECKOUT */
+.checkout-component {
+  padding: 0px 60px 0px 60px;
+}
+
+.checkout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.checkout-form {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px lightgray;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 50px 0px 0px;
+  background-color: #1b3f3a;
+}
+.purchase-button {
+  align-self: center;
+  background-color: #afd1be;
+  color: #000000;
+  box-shadow: none;
+  align-self: center;
+  margin: 20px 0px 20px 0px;
+  font-size: 20px;
+}

@@ -11,17 +11,19 @@ class Checkout extends Component {
     }
   }
   async componentDidMount() {
-    await this.props.getCart(this.props.userId)
+    await this.props.fetchCart(this.props.userId)
     this.calcTotal()
   }
   calcTotal() {
     let total = 0
-    this.props.cart.map(item => {
-      total += item.quantity * item.product.price
-    })
-    this.setState({
-      total
-    })
+    if (this.props.cart) {
+      this.props.cart.map(item => {
+        total += item.quantity * item.product.price
+      })
+      this.setState({
+        total
+      })
+    }
   }
 
   handleChange() {}
@@ -31,87 +33,94 @@ class Checkout extends Component {
   // HOPE: WRITE THIS FUNC
 
   render() {
-    const {user} = this.req
     const {cart} = this.props
     return (
-      <div>
+      <div className="checkout-component">
         <h1>Checkout</h1>
-        {this.state.orderPlaced ? (
-          <div className="order-placed">
-            <h2>Your order has been placed 🍜</h2>
-          </div>
-        ) : (
-          <div className="checkout-list">
-            {cart.map(item => {
-              return (
-                <div key={item.id} className="checkout-item">
-                  <img src={item.product.imageUrl} />
-                  <div className="checkout-item-info">
-                    <h3>{item.product.name}</h3>
-                    <h3>Quantity: {item.quantity}</h3>
-                    <h3>Price: {item.product.price}</h3>
-                  </div>
-                </div>
-              )
-            })}
-            <h2>Total: {this.state.total}</h2>
-          </div>
-        )}
-        <form className="checkout-form" onSubmit={this.handleCheckout}>
-          <div>
-            <label>First Name:</label>
-            <input
-              className="input-box"
-              type="text"
-              name="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label>Last Name:</label>
-            <input
-              className="input-box"
-              type="text"
-              name="lastName"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label>Card Number:</label>
-            <input
-              className="input-box"
-              type="text"
-              name="cardNumber"
-              value={this.state.cardNumber}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label>Address:</label>
-            <input
-              className="input-box"
-              type="text"
-              name="address"
-              value={this.state.address}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label>Zip Code:</label>
-            <input
-              className="input-box"
-              type="text"
-              name="zipCode"
-              value={this.state.zipCode}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button type="submit">Complete Purchase</button>
+        <div className="checkout">
+          {this.state.orderPlaced ? (
+            <div className="order-placed">
+              <h2>Your order has been placed 🍜</h2>
+            </div>
+          ) : (
+            <div className="checkout-list">
+              {cart ? (
+                cart.map(item => {
+                  return (
+                    <div key={item.id} className="checkout-item">
+                      <img src={item.product.imageUrl} />
+                      <div className="checkout-item-info">
+                        <h3>{item.product.name}</h3>
+                        <h3>Quantity: {item.quantity}</h3>
+                        <h3>Price: {item.product.price}</h3>
+                      </div>
+                    </div>
+                  )
+                })
+              ) : (
+                <h2>Shopping cart is empty</h2>
+              )}
+              <h2>Total: {this.state.total}</h2>
+            </div>
+          )}
+          <form className="checkout-form" onSubmit={this.handleCheckout}>
+            <div>
+              <label>First Name:</label>
+              <input
+                className="input-box"
+                type="text"
+                name="firstName"
+                value={this.state.firstName}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Last Name:</label>
+              <input
+                className="input-box"
+                type="text"
+                name="lastName"
+                value={this.state.lastName}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Card Number:</label>
+              <input
+                className="input-box"
+                type="text"
+                name="cardNumber"
+                value={this.state.cardNumber}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Address:</label>
+              <input
+                className="input-box"
+                type="text"
+                name="address"
+                value={this.state.address}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label>Zip Code:</label>
+              <input
+                className="input-box"
+                type="text"
+                name="zipCode"
+                value={this.state.zipCode}
+                onChange={this.handleChange}
+              />
+            </div>
+            <button className="purchase-button" type="submit">
+              Complete Purchase
+            </button>
 
-          {/* HOPE:FINISH WRITING FORM */}
-        </form>
+            {/* HOPE:FINISH WRITING FORM */}
+          </form>
+        </div>
       </div>
     )
   }

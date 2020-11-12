@@ -32,11 +32,16 @@ router.put('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    const [currentOrder, newOrder] = await Order.findOrCreate({
+      where: {
+        userId: req.body.userId,
+        orderDate: null
+      }
+    })
     const [newPending, wasCreated] = await Pending.findOrCreate({
       where: {
-        orderId: req.body.orderId,
-        productId: req.body.productId,
-        orderPrice: req.body.orderPrice
+        orderId: currentOrder.id,
+        productId: req.body.productId
       },
       include: {
         model: Product

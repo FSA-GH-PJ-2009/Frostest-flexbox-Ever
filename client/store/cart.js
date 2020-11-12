@@ -38,9 +38,13 @@ const modifyQuant = (item, quantity) => ({
 export const fetchCart = userId => {
   return async dispatch => {
     try {
+      console.log(localStorage)
       if (userId) {
         const {data: cart} = await axios.get(`/api/cart/${userId}`)
         dispatch(updateCart(cart))
+      } else {
+        const cart = localStorage.getItem('cart')
+        dispatch(updateCart(JSON.parse(cart)))
       }
     } catch (error) {
       console.error('There was an error fetching the cart')

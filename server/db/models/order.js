@@ -1,21 +1,31 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+getTotal = async order => {
+  let sum = 0
+  let pending = await order.getPendings()
+  let product
+  await Promise.all(
+    pending.map(async item => {
+      if (order.orderDate) sum += item.quantity * item.orderPrice
+      else {
+        product = await item.getProduct()
+        sum += item.quantity * product.price
+      }
+    })
+  )
+  return sum
+}
+
 const Order = db.define('order', {
-  quantity: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-    validate: {
-      min: 0
+  total: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return getTotal(this)
     }
   },
   orderDate: {
     type: Sequelize.DATE,
-    defaultValue: null
-  },
-  orderPrice: {
-    type: Sequelize.DECIMAL(10, 2),
     defaultValue: null
   }
 })

@@ -6,13 +6,23 @@ import user from './user'
 import cart from './cart'
 import allProducts from './allProducts'
 import singleProduct from './singleProduct'
+import {persistStore, persistReducer} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 const reducer = combineReducers({user, cart, allProducts, singleProduct})
+
+const persistConfig = {
+  key: 'root',
+  storage
+}
+
+const persistedReducer = persistReducer(persistConfig, reducer)
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-const store = createStore(reducer, middleware)
+const store = createStore(persistedReducer, middleware)
+export const persistor = persistStore(store)
 
 export default store
 export * from './user'

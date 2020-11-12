@@ -130,7 +130,8 @@ const pendingMaker = products => {
   }
 }
 const orderMaker = () => ({
-  orderDate: Math.random() * 2 > 1 ? null : faker.date.recent()
+  orderDate: Math.random() * 2 > 1 ? null : faker.date.recent(),
+  userId: Math.floor(Math.random() * 50) + 1
 })
 
 const seedProducts = []

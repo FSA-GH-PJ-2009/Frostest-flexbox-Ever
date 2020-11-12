@@ -1,16 +1,19 @@
 const router = require('express').Router()
-const {Order, Product} = require('../db/models')
+const {Order, Product, Pending} = require('../db/models')
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const cart = await Order.findAll({
+    const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        orderDate: null
       },
       include: {
-        model: Product
+        model: Pending,
+        include: Product
       }
     })
+    const cart = order.pendings
     res.json(cart)
   } catch (error) {
     next(error)
@@ -19,7 +22,7 @@ router.get('/:userId', async (req, res, next) => {
 
 router.put('/:itemId', async (req, res, next) => {
   try {
-    const item = await Order.findByPk(req.params.itemId)
+    const item = await Pending.findByPk(req.params.itemId)
     await item.update(req.body)
     res.status(200).json(item)
   } catch (error) {
@@ -29,20 +32,21 @@ router.put('/:itemId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const [newOrder, wasCreated] = await Order.findOrCreate({
+    const [newPending, wasCreated] = await Pending.findOrCreate({
       where: {
-        userId: req.body.userId,
-        productId: req.body.productId
+        orderId: req.body.orderId,
+        productId: req.body.productId,
+        orderPrice: req.body.orderPrice
       },
       include: {
         model: Product
       }
     })
-    const prevQuant = newOrder.quantity
-    await newOrder.update({
+    const prevQuant = newPending.quantity
+    await newPending.update({
       quantity: prevQuant + 1
     })
-    res.status(201).json(newOrder)
+    res.status(201).json(newPending)
   } catch (error) {
     next(error)
   }
@@ -51,7 +55,7 @@ router.post('/', async (req, res, next) => {
 router.delete('/:itemId', async (req, res, next) => {
   try {
     const id = req.params.itemId
-    await Order.destroy({
+    await Pending.destroy({
       where: {
         id
       }
@@ -62,6 +66,17 @@ router.delete('/:itemId', async (req, res, next) => {
   }
 })
 
-router.delete('')
+router.delete('/order/:orderId', async (req, res, next) => {
+  try {
+    const id = req.params.orderId
+    await Order.destroy({
+      where: {
+        id
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router

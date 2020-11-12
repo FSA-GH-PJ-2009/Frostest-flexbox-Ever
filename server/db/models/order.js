@@ -4,9 +4,16 @@ const db = require('../db')
 getTotal = async order => {
   let sum = 0
   let pending = await order.getPendings()
-  pending.map(item => {
-    sum += item.quantity * item.orderPrice
-  })
+  let product
+  await Promise.all(
+    pending.map(async item => {
+      if (order.orderDate) sum += item.quantity * item.orderPrice
+      else {
+        product = await item.getProduct()
+        sum += item.quantity * product.price
+      }
+    })
+  )
   return sum
 }
 

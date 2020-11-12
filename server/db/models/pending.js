@@ -12,7 +12,7 @@ const Pending = db.define('pending', {
   },
   orderPrice: {
     type: Sequelize.DECIMAL(10, 2),
-    allowNull: false,
+    defaultValue: null,
     validate: {
       min: 0
     }

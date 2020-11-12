@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {Product, User, Order} = require('../server/db/models')
+const {Product, User, Pending, Order} = require('../server/db/models')
 const faker = require('faker')
 
 const actualProducts = [
@@ -119,14 +119,23 @@ const adminMaker = () => ({
   password: faker.internet.password(),
   isAdmin: true
 })
+const pendingMaker = products => {
+  const productId = Math.floor(Math.random() * 99) + 1
+  return {
+    quantity: Math.floor(Math.random() * 100),
+    orderPrice: products[productId - 1].price,
+    productId,
+    orderId: Math.floor(Math.random() * 49) + 1
+  }
+}
 const orderMaker = () => ({
-  quantity: Math.floor(Math.random() * 100),
-  productId: Math.floor(Math.random() * 99) + 1,
-  userId: Math.floor(Math.random() * 49) + 1
+  orderDate: Math.random() * 2 > 1 ? null : faker.date.recent(),
+  userId: Math.floor(Math.random() * 50) + 1
 })
 
 const seedProducts = []
 const seedUsers = []
+const seedPending = []
 const seedOrder = []
 
 const populateSeeds = () => {
@@ -138,6 +147,9 @@ const populateSeeds = () => {
   }
   for (let i = 1; i < 51; i++) {
     seedOrder.push(orderMaker())
+  }
+  for (let i = 1; i < 51; i++) {
+    seedPending.push(pendingMaker(seedProducts))
   }
   seedUsers.push(adminMaker())
 }
@@ -151,6 +163,7 @@ async function seed() {
   await Promise.all(seedProducts.map(product => Product.create(product)))
   await Promise.all(seedUsers.map(user => User.create(user)))
   await Promise.all(seedOrder.map(order => Order.create(order)))
+  await Promise.all(seedPending.map(pending => Pending.create(pending)))
   console.log('Database successfully seeded 🍜')
 }
 

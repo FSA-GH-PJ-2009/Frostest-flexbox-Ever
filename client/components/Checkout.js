@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, clearCart, updateOrderPrice} from '../store/cart'
 import {updateDate} from '../store/currentOrder'
+import {modifyInventory} from '../store/singleProduct'
 
 class Checkout extends Component {
   constructor(props) {
@@ -45,7 +46,11 @@ class Checkout extends Component {
     e.preventDefault()
     try {
       this.props.cart.map(cartItem => {
-        updateOrderPrice(cartItem.id, cartItem.product.price)
+        this.props.updateOrderPrice(cartItem.id, cartItem.product.price)
+        this.props.modifyInventory(
+          cartItem.id,
+          cartItem.product.inventory - cartItem.quantity
+        )
       })
       this.props.updateDate(this.props.cart[0].orderId)
       this.setState({
@@ -166,7 +171,9 @@ const mapDispatch = dispatch => ({
   clearCart: () => dispatch(clearCart()),
   updateOrderPrice: (itemId, price) =>
     dispatch(updateOrderPrice(itemId, price)),
-  updateDate: orderId => dispatch(updateDate(orderId))
+  updateDate: orderId => dispatch(updateDate(orderId)),
+  modifyInventory: (productId, newQuant) =>
+    dispatch(modifyInventory(productId, newQuant))
 })
 
 export default connect(mapState, mapDispatch)(Checkout)

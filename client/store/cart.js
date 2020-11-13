@@ -112,9 +112,11 @@ export const addItem = (item, userId, cart) => {
 export const updateOrderPrice = (itemId, orderPrice) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/cart/${itemId}`, {orderPrice: orderPrice})
+      await axios.put(`/api/cart/item/${itemId}`, {orderPrice: orderPrice})
       dispatch(newOrderPrice(itemId, orderPrice))
     } catch (error) {
+      console.log('ITEM ID', itemId)
+      console.log('orderPrice', orderPrice)
       console.log('Error updating orderPrice')
     }
   }

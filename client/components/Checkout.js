@@ -49,6 +49,7 @@ class Checkout extends Component {
       })
       this.props.updateDate(this.props.cart[0].orderId)
       this.setState({
+        orderPlaced: true,
         firstName: '',
         lastName: '',
         cardNumber: '',
@@ -56,6 +57,7 @@ class Checkout extends Component {
         zipCode: ''
       })
       this.props.clearCart()
+      this.calcTotal()
     } catch (error) {
       console.error('Error submitting purchase form')
     }

@@ -5,6 +5,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const MODIFY_QUANT = 'MODIFY_QUANT'
 const CLEAR_CART = 'CLEAR_CART'
+const UPDATE_ORDER_PRICE = 'UPDATE_ORDER_PRICE'
 
 /*
 Initial state
@@ -13,8 +14,8 @@ Initial state
 const defaultCart = []
 
 /*
-*ACTION CREATORS
-*/
+ *ACTION CREATORS
+ */
 const updateCart = cart => ({
   type: UPDATE_CART,
   cart
@@ -39,6 +40,14 @@ const modifyQuant = (item, quantity) => ({
   item,
   quantity
 })
+
+const newOrderPrice = (itemId, price) => ({
+  type: UPDATE_ORDER_PRICE,
+  itemId,
+  price
+})
+
+//THUNKS
 
 export const fetchCart = userId => {
   return async dispatch => {
@@ -100,6 +109,17 @@ export const addItem = (item, userId, cart) => {
   }
 }
 
+export const updateOrderPrice = (itemId, orderPrice) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/cart/${itemId}`, {orderPrice: orderPrice})
+      dispatch(newOrderPrice(itemId, orderPrice))
+    } catch (error) {
+      console.log('Error updating orderPrice')
+    }
+  }
+}
+
 export default function(state = defaultCart, action) {
   let newState, i, j, toAdd
   switch (action.type) {
@@ -136,6 +156,14 @@ export default function(state = defaultCart, action) {
       return newState
     case CLEAR_CART:
       return []
+    case UPDATE_ORDER_PRICE:
+      newState = []
+      state.map(item => {
+        if (item.id != action.itemId) {
+          newState.push({...item, orderPrice: action.orderPrice})
+        }
+      })
+      return newState
     default:
       return state
   }

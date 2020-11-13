@@ -1,14 +1,23 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, deleteItem} from '../store/cart'
+import {fetchCart, clearCart, updateOrderPrice} from '../store/cart'
+import {updateDate} from '../store/currentOrder'
 
 class Checkout extends Component {
   constructor(props) {
     super(props)
     this.state = {
       total: 0,
-      orderPlaced: false
+      orderPlaced: false,
+      firstName: '',
+      lastName: '',
+      cardNumber: '',
+      address: '',
+      zipCode: ''
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleCheckout = this.handleCheckout.bind(this)
+    this.calcTotal = this.calcTotal.bind(this)
   }
   async componentDidMount() {
     await this.props.fetchCart(this.props.userId)
@@ -26,14 +35,35 @@ class Checkout extends Component {
     }
   }
 
-  handleChange() {}
-  // HOPE: WRITE THIS FUNC
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
-  handleCheckout() {}
-  // HOPE: WRITE THIS FUNC
+  handleCheckout(e) {
+    e.preventDefault()
+    try {
+      this.props.cart.map(cartItem => {
+        updateOrderPrice(cartItem.id, cartItem.product.price)
+      })
+      this.props.updateDate(this.props.cart[0].orderId)
+      this.setState({
+        firstName: '',
+        lastName: '',
+        cardNumber: '',
+        address: '',
+        zipCode: ''
+      })
+      this.props.clearCart()
+    } catch (error) {
+      console.error('Error submitting purchase form')
+    }
+  }
 
   render() {
     const {cart} = this.props
+    console.log(cart)
     return (
       <div className="checkout-component">
         <h1>Checkout</h1>
@@ -117,8 +147,6 @@ class Checkout extends Component {
             <button className="purchase-button" type="submit">
               Complete Purchase
             </button>
-
-            {/* HOPE:FINISH WRITING FORM */}
           </form>
         </div>
       </div>
@@ -133,7 +161,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   fetchCart: userId => dispatch(fetchCart(userId)),
-  removeItem: itemId => dispatch(deleteItem(itemId))
+  clearCart: () => dispatch(clearCart()),
+  updateOrderPrice: (itemId, price) =>
+    dispatch(updateOrderPrice(itemId, price)),
+  updateDate: orderId => dispatch(updateDate(orderId))
 })
 
 export default connect(mapState, mapDispatch)(Checkout)

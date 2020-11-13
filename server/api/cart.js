@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const {Order, Product, Pending} = require('../db/models')
+const {isAllowed, isAdmin} = require('../security')
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isAllowed, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -58,7 +59,7 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAllowed, async (req, res, next) => {
   try {
     const [currentOrder, newOrder] = await Order.findOrCreate({
       where: {
@@ -99,7 +100,7 @@ router.delete('/:itemId', async (req, res, next) => {
   }
 })
 
-router.delete('/order/:orderId', async (req, res, next) => {
+router.delete('/order/:orderId', isAllowed, async (req, res, next) => {
   try {
     const id = req.params.orderId
     await Order.destroy({

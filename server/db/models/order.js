@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-getTotal = async order => {
+const getTotal = async order => {
   let sum = 0
   let pending = await order.getPendings()
   let product

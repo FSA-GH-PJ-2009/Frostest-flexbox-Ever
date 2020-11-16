@@ -101,12 +101,12 @@ class Checkout extends Component {
                         <div className="checkout-item-info">
                           <h3>{item.product.name}</h3>
                           <h3>Quantity: {item.quantity}</h3>
-                          <h3>Price: {item.product.price}</h3>
+                          <h3>Price: {`$${item.product.price}`}</h3>
                         </div>
                       </div>
                     )
                   })}
-                  <h2>Total: {this.state.total}</h2>
+                  <h2>Total: {`$${this.state.total.toFixed(2)}`}</h2>
                 </div>
               ) : (
                 <h2>Shopping cart is empty</h2>

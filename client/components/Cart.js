@@ -8,14 +8,14 @@ export class ShoppingCart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      total: 0
+      total: 0.0
     }
     this.modQuant = this.modQuant.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
   }
 
   calcTotal() {
-    let total = 0
+    let total = 0.0
     this.props.cart.map(item => {
       total += item.quantity * item.product.price
     })
@@ -48,45 +48,54 @@ export class ShoppingCart extends React.Component {
   }
   render() {
     return (
-      <div className="cart">
-        {this.props.cart ? (
-          <div>
-            <div className="pending-products">
-              {this.props.cart.map(item => (
-                <div className="single-pending" key={item.id}>
-                  <img src={item.product.imageUrl} />
-                  <div className="pending-info">
-                    <h6>{item.product.name}</h6>
-                    <h6>{`$${item.product.price}`}</h6>
-                    <div className="pending-quantity">
-                      {item.quantity <= 1 ? (
-                      <button
-                        disabled
-                        className="button-inactive"
-                        onClick={() => this.modQuant(item, -1)}
-                      >
-                        -
-                      </button>
-                    ) : (
-                      <button onClick={() => this.modQuant(item, -1)}>-</button>
-                    )}                      <h6>{`Quantity: ${item.quantity}`}</h6>
-                      <button onClick={() => this.modQuant(item, 1)}>+</button>
-                      <button onClick={() => this.handleRemove(item)}>
-                        Remove from cart
-                      </button>
+      <div className="cart-component">
+        <div className="cart">
+          {this.props.cart ? (
+            <div>
+              <div className="pending-products">
+                {this.props.cart.map(item => (
+                  <div className="single-pending" key={item.id}>
+                    <img src={item.product.imageUrl} />
+                    <div className="pending-info">
+                      <h3>{item.product.name}</h3>
+                      <h3>{`$${item.product.price}`}</h3>
+                      <div className="pending-quantity">
+                        {item.quantity <= 1 ? (
+                          <button
+                            disabled
+                            className="button-inactive"
+                            onClick={() => this.modQuant(item, -1)}
+                          >
+                            -
+                          </button>
+                        ) : (
+                          <button onClick={() => this.modQuant(item, -1)}>
+                            -
+                          </button>
+                        )}{' '}
+                        <h3>{`qnt: ${item.quantity}`}</h3>
+                        <button onClick={() => this.modQuant(item, 1)}>
+                          +
+                        </button>
+                        <button onClick={() => this.handleRemove(item)}>
+                          remove
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="cart-footer">
+                <h2>{`total: $${this.state.total}`}</h2>
+                <Link className="checkout-button" to="/checkout">
+                  checkout
+                </Link>
+              </div>
             </div>
-            <Link className="peruse-button" to="/checkout">
-              checkout
-            </Link>
-          </div>
-        ) : (
-          <h2>Shopping cart is empty</h2>
-        )}
-        <h4>{`total: $${this.state.total}`}</h4>
+          ) : (
+            <h2>Shopping cart is empty</h2>
+          )}
+        </div>
       </div>
     )
   }

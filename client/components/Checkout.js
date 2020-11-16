@@ -96,9 +96,12 @@ class Checkout extends Component {
                 <div>
                   {cart.map(item => {
                     return (
-                      <div key={item.id} className="checkout-item">
-                        <img src={item.product.imageUrl} />
-                        <div className="checkout-item-info">
+                      <div key={item.id} className="single-pending">
+                        <img
+                          src={item.product.imageUrl}
+                          className="single-checkout-img"
+                        />
+                        <div className="pending-info">
                           <h3>{item.product.name}</h3>
                           <h3>Quantity: {item.quantity}</h3>
                           <h3>Price: {`$${item.product.price}`}</h3>
@@ -106,7 +109,6 @@ class Checkout extends Component {
                       </div>
                     )
                   })}
-                  <h2>Total: {`$${this.state.total.toFixed(2)}`}</h2>
                 </div>
               ) : (
                 <h2>Shopping cart is empty</h2>
@@ -165,9 +167,12 @@ class Checkout extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <button className="purchase-button" type="submit">
-                Complete Purchase
-              </button>
+              <div className="complete-purchase">
+                <h2>Total: {`$${this.state.total.toFixed(2)}`}</h2>
+                <button className="purchase-button" type="submit">
+                  Complete Purchase
+                </button>
+              </div>
             </form>
           ) : (
             <div>

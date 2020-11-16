@@ -46,9 +46,6 @@ export const fetchCart = userId => {
       if (userId) {
         const {data: cart} = await axios.get(`/api/cart/${userId}`)
         dispatch(updateCart(cart))
-      } else {
-        //const cart = localStorage.getItem('cart')
-        //dispatch(updateCart(JSON.parse(cart)))
       }
     } catch (error) {
       console.error('There was an error fetching the cart')
@@ -76,17 +73,20 @@ export const addItem = (item, userId, cart) => {
     let orderId = cart.length > 0 ? cart[cart.length - 1].id + 1 : 0
 
     if (userId) {
+      //findOrCreate order, increate quant by 1
       let order = await axios.post('/api/cart', {
         userId,
         productId
       })
       orderId = order.id
     } else {
+      //search for whether it already exists in cart
       cart.map(cartItem => {
         if (cartItem.product.id == productId) {
           orderId = cartItem.id
         }
       })
+
       dispatch(
         addToCart([
           {
@@ -101,10 +101,11 @@ export const addItem = (item, userId, cart) => {
 }
 
 export default function(state = defaultCart, action) {
-  let newState, i, j, toAdd
+  let newState, i, j
   switch (action.type) {
     case UPDATE_CART:
       return action.cart
+
     case ADD_TO_CART:
       newState = [...state]
       let newItem
@@ -124,6 +125,7 @@ export default function(state = defaultCart, action) {
       return state.filter(item => {
         return item.id != action.item
       })
+
     case MODIFY_QUANT:
       newState = []
       state.map(item => {
@@ -134,8 +136,10 @@ export default function(state = defaultCart, action) {
         }
       })
       return newState
+
     case CLEAR_CART:
       return []
+
     default:
       return state
   }

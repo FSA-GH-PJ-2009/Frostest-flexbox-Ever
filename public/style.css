@@ -51,7 +51,7 @@ button {
   font-family: 'Abel', sans-serif;
   font-size: 15px;
   border-radius: 10px;
-  box-shadow: 2px 2px 6px #683831;
+  box-shadow: 2px 2px 2px black;
 }
 
 /* CART */
@@ -60,20 +60,24 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 30px;
 }
 
 .cart {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 30px;
-  width: 500px;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.cart-component h1 {
+  margin: none;
 }
 
 .pending-products {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 500px;
 }
 
 .single-pending {
@@ -107,21 +111,22 @@ button {
 
 .cart-footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin: 10px;
 }
 
 .checkout-button {
-  background-color: #1b3f3a;
+  background-color: #683831;
   border: none;
   padding: 15px;
   color: rgba(253, 248, 235, 1);
   font-family: 'Abel', sans-serif;
   font-size: 30px;
   border-radius: 10px;
-  box-shadow: 2px 2px 6px #683831;
+  box-shadow: 2px 2px 6px rgba(253, 248, 235, 1);
+  margin: 10px;
 }
 
 .single-pending h3 {

@@ -49,9 +49,10 @@ export class ShoppingCart extends React.Component {
   render() {
     return (
       <div className="cart-component">
-        <div className="cart">
+        <h1>Your Cart</h1>
+        <div className="cart-and-info">
           {this.props.cart ? (
-            <div>
+            <div className="cart">
               <div className="pending-products">
                 {this.props.cart.map(item => (
                   <div className="single-pending" key={item.id}>

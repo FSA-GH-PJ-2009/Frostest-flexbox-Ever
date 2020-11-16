@@ -62,11 +62,7 @@ export class ShoppingCart extends React.Component {
                       <h3>{`$${item.product.price}`}</h3>
                       <div className="pending-quantity">
                         {item.quantity <= 1 ? (
-                          <button
-                            disabled
-                            className="button-inactive"
-                            onClick={() => this.modQuant(item, -1)}
-                          >
+                           <button disabled className="button-inactive">
                             -
                           </button>
                         ) : (
@@ -75,19 +71,26 @@ export class ShoppingCart extends React.Component {
                           </button>
                         )}{' '}
                         <h3>{`qnt: ${item.quantity}`}</h3>
+                        {item.quantity >= item.product.inventory ? (
+                        <button disabled className="button-inactive">
+                          +
+                        </button>
+                      ) : (
                         <button onClick={() => this.modQuant(item, 1)}>
                           +
                         </button>
+                      )}
                         <button onClick={() => this.handleRemove(item)}>
                           remove
                         </button>
                       </div>
+
                     </div>
                   </div>
                 ))}
               </div>
               <div className="cart-footer">
-                <h2>{`total: $${this.state.total}`}</h2>
+                <h2>{`total: $${this.state.total.toFixed(2)}`}</h2>
                 <Link className="checkout-button" to="/checkout">
                   checkout
                 </Link>
@@ -97,6 +100,7 @@ export class ShoppingCart extends React.Component {
             <h2>Shopping cart is empty</h2>
           )}
         </div>
+
       </div>
     )
   }

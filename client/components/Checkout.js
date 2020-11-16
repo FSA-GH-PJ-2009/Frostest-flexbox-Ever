@@ -104,7 +104,7 @@ class Checkout extends Component {
                         <div className="pending-info">
                           <h3>{item.product.name}</h3>
                           <h3>Quantity: {item.quantity}</h3>
-                          <h3>Price: {item.product.price}</h3>
+                          <h3>Price: {`$${item.product.price}`}</h3>
                         </div>
                       </div>
                     )
@@ -168,7 +168,7 @@ class Checkout extends Component {
                 />
               </div>
               <div className="complete-purchase">
-                <h2>Total: {this.state.total}</h2>
+                <h2>Total: {`$${this.state.total.toFixed(2)}`}</h2>
                 <button className="purchase-button" type="submit">
                   Complete Purchase
                 </button>

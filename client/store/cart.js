@@ -40,6 +40,8 @@ const modifyQuant = (item, quantity) => ({
   quantity
 })
 
+//CR NOTE:
+//Make sure to remove commented out code blocks from your master branch :)
 export const fetchCart = userId => {
   return async dispatch => {
     try {
@@ -106,6 +108,8 @@ export default function(state = defaultCart, action) {
     case UPDATE_CART:
       return action.cart
     case ADD_TO_CART:
+      //CR NOTE:
+      //We can possibly make this code more efficient by using a map (object) instead of nested for loops
       newState = [...state]
       let newItem
       for (i = 0; i < action.cart.length; i++) {

@@ -12,11 +12,11 @@ class SingleProduct extends React.Component {
     this.props.getProduct(this.props.match.params.productId)
   }
 
+  //CR NOTE: Make sure console logs are removed from the main branch! It's important to keep this branch as clean as possible.
   render() {
     console.log(this.props)
     const {product} = this.props
     return (
-
       <div key={product.id} className="single-product-container">
         <div className="single-product">
           <img className="single-product-img" src={product.imageUrl} />
@@ -25,16 +25,19 @@ class SingleProduct extends React.Component {
               <h2>{product.name}</h2>
               <p>{product.description}</p>
             </div>
-          <button
-          onClick={() => {
-            this.props.addToCart(product, this.props.userId, this.props.cart)
-          }}
-        >
-          Add to Cart
-        </button>
+            <button
+              onClick={() => {
+                this.props.addToCart(
+                  product,
+                  this.props.userId,
+                  this.props.cart
+                )
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
-
       </div>
     )
   }

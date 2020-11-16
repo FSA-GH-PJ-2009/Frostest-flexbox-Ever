@@ -20,6 +20,9 @@ export const fetchProduct = productId => {
     }
   }
 }
+
+//CR NOTE: How come initState is an array and not an object?
+//If the fetch product route returns an object then our initial redux state should reflect that :)
 //INIT STATE
 const initState = []
 //REDUCER

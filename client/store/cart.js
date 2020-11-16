@@ -5,6 +5,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const MODIFY_QUANT = 'MODIFY_QUANT'
 const CLEAR_CART = 'CLEAR_CART'
+const UPDATE_ORDER_PRICE = 'UPDATE_ORDER_PRICE'
 
 /*
 Initial state
@@ -13,8 +14,8 @@ Initial state
 const defaultCart = []
 
 /*
-*ACTION CREATORS
-*/
+ *ACTION CREATORS
+ */
 const updateCart = cart => ({
   type: UPDATE_CART,
   cart
@@ -40,15 +41,20 @@ const modifyQuant = (item, quantity) => ({
   quantity
 })
 
+const newOrderPrice = (itemId, price) => ({
+  type: UPDATE_ORDER_PRICE,
+  itemId,
+  price
+})
+
+//THUNKS
+
 export const fetchCart = userId => {
   return async dispatch => {
     try {
       if (userId) {
         const {data: cart} = await axios.get(`/api/cart/${userId}`)
         dispatch(updateCart(cart))
-      } else {
-        //const cart = localStorage.getItem('cart')
-        //dispatch(updateCart(JSON.parse(cart)))
       }
     } catch (error) {
       console.error('There was an error fetching the cart')
@@ -76,17 +82,20 @@ export const addItem = (item, userId, cart) => {
     let orderId = cart.length > 0 ? cart[cart.length - 1].id + 1 : 0
 
     if (userId) {
+      //findOrCreate order, increate quant by 1
       let order = await axios.post('/api/cart', {
         userId,
         productId
       })
       orderId = order.id
     } else {
+      //search for whether it already exists in cart
       cart.map(cartItem => {
         if (cartItem.product.id == productId) {
           orderId = cartItem.id
         }
       })
+
       dispatch(
         addToCart([
           {
@@ -100,11 +109,25 @@ export const addItem = (item, userId, cart) => {
   }
 }
 
+export const updateOrderPrice = (itemId, orderPrice) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/cart/item/${itemId}`, {orderPrice: orderPrice})
+      dispatch(newOrderPrice(itemId, orderPrice))
+    } catch (error) {
+      console.log('ITEM ID', itemId)
+      console.log('orderPrice', orderPrice)
+      console.log('Error updating orderPrice')
+    }
+  }
+}
+
 export default function(state = defaultCart, action) {
-  let newState, i, j, toAdd
+  let newState, i, j
   switch (action.type) {
     case UPDATE_CART:
       return action.cart
+
     case ADD_TO_CART:
       newState = [...state]
       let newItem
@@ -124,6 +147,7 @@ export default function(state = defaultCart, action) {
       return state.filter(item => {
         return item.id != action.item
       })
+
     case MODIFY_QUANT:
       newState = []
       state.map(item => {
@@ -134,8 +158,19 @@ export default function(state = defaultCart, action) {
         }
       })
       return newState
+
     case CLEAR_CART:
       return []
+      
+    case UPDATE_ORDER_PRICE:
+      newState = []
+      state.map(item => {
+        if (item.id != action.itemId) {
+          newState.push({...item, orderPrice: action.orderPrice})
+        }
+      })
+      return newState
+
     default:
       return state
   }

@@ -23,4 +23,15 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
+//PUT /api/products/:productId
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId)
+    await product.update(req.body)
+    res.json(product)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router

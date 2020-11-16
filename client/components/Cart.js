@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, updateQuantity, deleteItem} from '../store/cart'
 import {me} from '../store/user'
+import {Link} from 'react-router-dom'
 
 export class ShoppingCart extends React.Component {
   constructor(props) {
@@ -49,15 +50,16 @@ export class ShoppingCart extends React.Component {
     return (
       <div className="cart">
         {this.props.cart ? (
-          <div className="pending-products">
-            {this.props.cart.map(item => (
-              <div className="single-pending" key={item.id}>
-                <img src={item.product.imageUrl} />
-                <div className="pending-info">
-                  <h6>{item.product.name}</h6>
-                  <h6>{`$${item.product.price}`}</h6>
-                  <div className="pending-quantity">
-                    {item.quantity <= 1 ? (
+          <div>
+            <div className="pending-products">
+              {this.props.cart.map(item => (
+                <div className="single-pending" key={item.id}>
+                  <img src={item.product.imageUrl} />
+                  <div className="pending-info">
+                    <h6>{item.product.name}</h6>
+                    <h6>{`$${item.product.price}`}</h6>
+                    <div className="pending-quantity">
+                      {item.quantity <= 1 ? (
                       <button
                         disabled
                         className="button-inactive"
@@ -67,16 +69,19 @@ export class ShoppingCart extends React.Component {
                       </button>
                     ) : (
                       <button onClick={() => this.modQuant(item, -1)}>-</button>
-                    )}
-                    <h6>{`Quantity: ${item.quantity}`}</h6>
-                    <button onClick={() => this.modQuant(item, 1)}>+</button>
-                    <button onClick={() => this.handleRemove(item)}>
-                      Remove from cart
-                    </button>
+                    )}                      <h6>{`Quantity: ${item.quantity}`}</h6>
+                      <button onClick={() => this.modQuant(item, 1)}>+</button>
+                      <button onClick={() => this.handleRemove(item)}>
+                        Remove from cart
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <Link className="peruse-button" to="/checkout">
+              checkout
+            </Link>
           </div>
         ) : (
           <h2>Shopping cart is empty</h2>

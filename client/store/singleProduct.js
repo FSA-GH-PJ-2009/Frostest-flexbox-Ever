@@ -20,6 +20,17 @@ export const fetchProduct = productId => {
     }
   }
 }
+
+export const modifyInventory = (productId, newQuant) => {
+  return async () => {
+    try {
+      await axios.put(`/api/products/${productId}`, {inventory: newQuant})
+    } catch (error) {
+      console.error('Error modifying product inventory')
+    }
+  }
+}
+
 //INIT STATE
 const initState = []
 //REDUCER

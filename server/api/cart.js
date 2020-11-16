@@ -20,7 +20,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('item/:itemId', async (req, res, next) => {
+router.put('/item/:itemId', async (req, res, next) => {
   try {
     const item = await Pending.findByPk(req.params.itemId)
     await item.update(req.body)

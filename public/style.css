@@ -54,6 +54,18 @@ button {
   box-shadow: 2px 2px 6px #683831;
 }
 
+.button-inactive {
+  background-color: #8d5e57;
+}
+
+.button-inactive:hover {
+  cursor: not-allowed;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 /* CART */
 
 .cart {

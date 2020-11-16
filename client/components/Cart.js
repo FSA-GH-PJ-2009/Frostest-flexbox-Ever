@@ -57,7 +57,17 @@ export class ShoppingCart extends React.Component {
                   <h6>{item.product.name}</h6>
                   <h6>{`$${item.product.price}`}</h6>
                   <div className="pending-quantity">
-                    <button onClick={() => this.modQuant(item, -1)}>-</button>
+                    {item.quantity <= 1 ? (
+                      <button
+                        disabled
+                        className="button-inactive"
+                        onClick={() => this.modQuant(item, -1)}
+                      >
+                        -
+                      </button>
+                    ) : (
+                      <button onClick={() => this.modQuant(item, -1)}>-</button>
+                    )}
                     <h6>{`Quantity: ${item.quantity}`}</h6>
                     <button onClick={() => this.modQuant(item, 1)}>+</button>
                     <button onClick={() => this.handleRemove(item)}>
@@ -71,7 +81,7 @@ export class ShoppingCart extends React.Component {
         ) : (
           <h2>Shopping cart is empty</h2>
         )}
-        <h4>{`total: ${this.state.total}`}</h4>
+        <h4>{`total: $${this.state.total}`}</h4>
       </div>
     )
   }

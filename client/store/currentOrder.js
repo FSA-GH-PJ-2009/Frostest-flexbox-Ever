@@ -34,7 +34,7 @@ export const updateDate = orderId => {
   return async dispatch => {
     try {
       const {data: order} = await axios.put(`/api/orders/${orderId}`, {
-        orderDate: new Date()
+        orderDate: Date.now()
       })
       dispatch(dateUpdated(order))
     } catch (error) {

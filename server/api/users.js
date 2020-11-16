@@ -20,7 +20,7 @@ router.get('/', isAdmin, async (req, res, next) => {
 
 router.get('/history/:userId', async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
+    let orders = await Order.findAll({
       where: {
         userId: req.params.userId,
         orderDate: {
@@ -31,9 +31,6 @@ router.get('/history/:userId', async (req, res, next) => {
         model: Pending,
         include: Product
       }
-    })
-    orders.map(order => {
-      order.total.then(amount => console.log(amount))
     })
     res.json(orders)
   } catch (error) {

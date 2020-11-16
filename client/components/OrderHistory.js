@@ -6,15 +6,42 @@ import {fetchOrders} from '../store/orderHistory'
 class orderHistory extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      total: {}
+    }
   }
-  componentDidMount() {
-    this.props.getOrders(this.props.userId)
+  async componentDidMount() {
+    await this.props.getOrders(this.props.userId)
   }
   render() {
     return (
       <div className="order-history">
-        <h2>Order history</h2>
-        {this.props.orders.map(order => <h4>{order.orderDate}</h4>)}
+        <h1>Order history</h1>
+        {this.props.orders.map(order => {
+          const date = new Date(order.orderDate)
+          return (
+            <div key={order.id} className="past-order">
+              <h2>{date.toString()}</h2>
+              {order.pendings.map(pending => {
+                return (
+                  <div className="history-item">
+                    <img src={pending.product.imageUrl} />
+                    <h6>
+                      {`${pending.product.name}($${pending.orderPrice}) x ${
+                        pending.quantity
+                      }`}
+                    </h6>
+                  </div>
+                )
+              })}
+              <h5>{`Total: $${order.pendings.reduce(
+                (total, pending) =>
+                  total + pending.orderPrice * pending.quantity,
+                0
+              )}`}</h5>
+            </div>
+          )
+        })}
       </div>
     )
   }

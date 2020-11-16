@@ -263,3 +263,9 @@ nav a {
   margin: 20px 0px 20px 0px;
   font-size: 20px;
 }
+
+/*ORDER HISTORY*/
+.history-item img {
+  height: 180px;
+  border-radius: 15px;
+}

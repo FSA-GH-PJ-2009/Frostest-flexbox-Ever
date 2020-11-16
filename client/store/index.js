@@ -6,10 +6,17 @@ import user from './user'
 import cart from './cart'
 import allProducts from './allProducts'
 import singleProduct from './singleProduct'
+import currentOrder from './currentOrder'
 import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-const reducer = combineReducers({user, cart, allProducts, singleProduct})
+const reducer = combineReducers({
+  user,
+  cart,
+  allProducts,
+  singleProduct,
+  currentOrder
+})
 
 const persistConfig = {
   key: 'root',

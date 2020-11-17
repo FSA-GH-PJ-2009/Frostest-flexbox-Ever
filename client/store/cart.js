@@ -131,16 +131,16 @@ export default function(state = defaultCart, action) {
     case ADD_TO_CART:
       newState = [...state]
       let newItem
-      for (i = 0; i < action.cart.length; i++) {
+      action.cart.map(item => {
         newItem = true
-        for (j = 0; j < newState.length; j++) {
-          if (newState[j].id == action.cart[i].id) {
+        newState.map(prevItem => {
+          if (prevItem.id == item.id) {
             newItem = false
-            newState[j].quantity += action.cart[i].quantity
+            prevItem.quantity += item.quantity
           }
-        }
-        if (newItem) newState.push(action.cart[i])
-      }
+        })
+        if (newItem) newState.push(item)
+      })
       return newState
 
     case REMOVE_ITEM:
@@ -161,7 +161,7 @@ export default function(state = defaultCart, action) {
 
     case CLEAR_CART:
       return []
-      
+
     case UPDATE_ORDER_PRICE:
       newState = []
       state.map(item => {

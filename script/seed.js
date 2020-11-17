@@ -6,7 +6,7 @@ const faker = require('faker')
 
 const actualProducts = [
   {
-    name: "MONK'S TAKE ON UDON",
+    name: "MORK'S TAKE ON UDON",
     price: 12,
     inventory: 500,
     description:

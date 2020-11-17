@@ -123,6 +123,7 @@ class Checkout extends Component {
                   className="input-box"
                   type="text"
                   name="firstName"
+                  required="required"
                   value={this.state.firstName}
                   onChange={this.handleChange}
                 />
@@ -133,6 +134,7 @@ class Checkout extends Component {
                   className="input-box"
                   type="text"
                   name="lastName"
+                  required="required"
                   value={this.state.lastName}
                   onChange={this.handleChange}
                 />
@@ -143,6 +145,7 @@ class Checkout extends Component {
                   className="input-box"
                   type="text"
                   name="cardNumber"
+                  required="required"
                   value={this.state.cardNumber}
                   onChange={this.handleChange}
                 />
@@ -153,6 +156,7 @@ class Checkout extends Component {
                   className="input-box"
                   type="text"
                   name="address"
+                  required="required"
                   value={this.state.address}
                   onChange={this.handleChange}
                 />
@@ -163,6 +167,7 @@ class Checkout extends Component {
                   className="input-box"
                   type="text"
                   name="zipCode"
+                  required="required"
                   value={this.state.zipCode}
                   onChange={this.handleChange}
                 />

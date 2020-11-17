@@ -4,7 +4,9 @@ const {Product} = require('../db/models')
 //GET /api/products
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll({
+      order: [['id', 'ASC']]
+    })
     res.json(products)
   } catch (error) {
     next(error)

@@ -22,6 +22,7 @@ class AllProducts extends Component {
                 <Link className="noodle-name" to={`/products/${product.id}`}>
                   {product.name}
                 </Link>
+                <p>{`$${product.price}`}</p>
                 <button
                   type="submit"
                   onClick={() => {

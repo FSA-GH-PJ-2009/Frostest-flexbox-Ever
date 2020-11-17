@@ -13,7 +13,6 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {product} = this.props
     return (
       <div key={product.id} className="single-product-container">

@@ -319,6 +319,11 @@ nav a {
   background-color: #1b3f3a;
 }
 
+.product-img {
+  width: 250px;
+  height: 200px;
+}
+
 /* SINGLE PRODUCT */
 .single-product-img {
   width: 500px;

@@ -179,6 +179,7 @@ button {
     rgba(253, 248, 235, 1)
   );
   align-items: center;
+  max-width: 100%;
 }
 
 nav a {
@@ -257,6 +258,11 @@ nav a {
   box-shadow: 2px 2px 6px #683831;
   width: 280px;
   height: 300px;
+}
+
+.product-img {
+  width: 250px;
+  height: 200px;
 }
 
 /* SINGLE PRODUCT */

@@ -21,19 +21,21 @@ class orderHistory extends React.Component {
           const date = new Date(order.orderDate)
           return (
             <div key={order.id} className="past-order">
-              <h2>{date.toString()}</h2>
-              {order.pendings.map(pending => {
-                return (
-                  <div className="history-item">
-                    <img src={pending.product.imageUrl} />
-                    <h6>
-                      {`${pending.product.name}($${pending.orderPrice}) x ${
-                        pending.quantity
-                      }`}
-                    </h6>
-                  </div>
-                )
-              })}
+              <h2 className="date-string">{date.toString()}</h2>
+              <div className="past-order-items">
+                {order.pendings.map(pending => {
+                  return (
+                    <div className="history-item">
+                      <img src={pending.product.imageUrl} />
+                      <h6>
+                        {`${pending.product.name}($${pending.orderPrice}) x ${
+                          pending.quantity
+                        }`}
+                      </h6>
+                    </div>
+                  )
+                })}
+              </div>
               <h5>{`Total: $${order.pendings.reduce(
                 (total, pending) =>
                   total + pending.orderPrice * pending.quantity,

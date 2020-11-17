@@ -20,6 +20,12 @@ h1 {
   text-shadow: 2px 2px 4px rgba(253, 248, 235, 1);
 }
 
+@media (max-width: 600px) {
+  h1 {
+    font-size: 50px;
+  }
+}
+
 a {
   text-decoration: none;
   color: #1b3f3a;
@@ -96,8 +102,8 @@ a:hover {
   background-color: #1b3f3a;
   border-radius: 10px;
   box-shadow: 2px 2px 6px #683831;
-  width: 500px;
-  height: 200px;
+  max-width: 400px;
+  max-height: 200px;
   align-items: center;
   padding: 10px;
 }
@@ -109,7 +115,7 @@ a:hover {
 }
 
 .single-pending img {
-  width: 50%;
+  width: 200px;
   border-radius: 10px;
   margin: 10px;
 }
@@ -148,6 +154,7 @@ a:hover {
 @media (max-width: 600px) {
   .cart {
     flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -206,8 +213,7 @@ a:hover {
     rgba(253, 248, 235, 1)
   );
   align-items: center;
-  overflow: hidden;
-  position: relative;
+  max-width: 100%;
 }
 
 nav a {
@@ -221,7 +227,10 @@ nav a {
 
 @media (max-width: 600px) {
   .my-links {
-    font-size: 15px;
+    margin: 0px 10px 0px 0px;
+  }
+  .my-links a {
+    font-size: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -329,6 +338,16 @@ nav a {
   width: 900px;
 }
 
+@media (max-width: 600px) {
+  .single-product {
+    width: 400px;
+  }
+  .single-product-img {
+    width: 200px;
+    height: auto;
+  }
+}
+
 .single-product-info {
   padding: 10px;
   display: flex;
@@ -338,6 +357,10 @@ nav a {
 }
 
 /* CHECKOUT */
+
+.checkout-component h1 {
+  margin: 0px 30px 0px 30px;
+}
 
 .single-checkout-img {
   max-width: 300px;
@@ -354,16 +377,12 @@ nav a {
 
 .complete-purchase {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .checkout-form {
   flex: 0 0 30%;
-}
-
-.checkout-component {
-  padding: 30px;
 }
 
 .login-buttons {
@@ -375,6 +394,7 @@ nav a {
 @media (max-width: 600px) {
   .checkout {
     flex-direction: column;
+    align-items: center;
   }
 }
 

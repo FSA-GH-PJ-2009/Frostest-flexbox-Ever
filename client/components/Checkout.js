@@ -4,6 +4,7 @@ import {fetchCart, clearCart, updateOrderPrice} from '../store/cart'
 import {updateDate} from '../store/currentOrder'
 import {modifyInventory} from '../store/singleProduct'
 import {Login, Signup} from './auth-form'
+import PaypalBtn from 'react-paypal-checkout'
 
 class Checkout extends Component {
   constructor(props) {
@@ -177,6 +178,7 @@ class Checkout extends Component {
                 <button className="purchase-button" type="submit">
                   Complete Purchase
                 </button>
+                <PaypalBtn />
               </div>
             </form>
           ) : (

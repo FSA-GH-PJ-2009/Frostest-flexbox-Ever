@@ -32,7 +32,7 @@ export const modifyInventory = (productId, newQuant) => {
 }
 
 //INIT STATE
-const initState = []
+const initState = {}
 //REDUCER
 export default function productReducer(state = initState, action) {
   switch (action.type) {

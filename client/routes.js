@@ -9,6 +9,7 @@ import SingleProduct from './components/SingleProduct'
 import ShoppingCart from './components/Cart'
 import Welcome from './components/Welcome'
 import Checkout from './components/Checkout'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT

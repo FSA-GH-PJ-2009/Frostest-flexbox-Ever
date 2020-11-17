@@ -14,7 +14,9 @@ router.get('/:userId', isAllowed, async (req, res, next) => {
         include: Product
       }
     })
-    const cart = order.pendings
+    let cart
+    if (order) cart = order.pendings
+    else cart = []
     res.json(cart)
   } catch (error) {
     next(error)

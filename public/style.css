@@ -314,3 +314,9 @@ nav a {
 .checkout-component {
   padding: 30px;
 }
+
+/*ORDER HISTORY*/
+.history-item img {
+  height: 180px;
+  border-radius: 15px;
+}

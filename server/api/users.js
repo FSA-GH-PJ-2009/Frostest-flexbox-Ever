@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
-const {isAdmin} = require('../security')
+const {User, Order, Pending, Product} = require('../db/models')
+const {isAdmin, isAllowed} = require('../security')
+const {Op} = require('sequelize')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
@@ -14,5 +15,25 @@ router.get('/', isAdmin, async (req, res, next) => {
     res.json(users)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/history/:userId', async (req, res, next) => {
+  try {
+    let orders = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        orderDate: {
+          [Op.not]: null
+        }
+      },
+      include: {
+        model: Pending,
+        include: Product
+      }
+    })
+    res.json(orders)
+  } catch (error) {
+    next(error)
   }
 })

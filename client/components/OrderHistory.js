@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {fetchOrders} from '../store/orderHistory'
 
@@ -27,11 +28,17 @@ class orderHistory extends React.Component {
                   return (
                     <div className="history-item">
                       <img src={pending.product.imageUrl} />
-                      <h6>
-                        {`${pending.product.name}($${pending.orderPrice}) x ${
-                          pending.quantity
-                        }`}
-                      </h6>
+                      <div className="history-text">
+                        <Link
+                          className="noodle-name"
+                          to={`/products/${pending.product.id}`}
+                        >
+                          {pending.product.name}
+                        </Link>
+                        <p>
+                          {` ($${pending.orderPrice}) x ${pending.quantity}`}
+                        </p>
+                      </div>
                     </div>
                   )
                 })}

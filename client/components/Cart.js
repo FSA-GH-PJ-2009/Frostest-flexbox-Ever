@@ -51,7 +51,7 @@ export class ShoppingCart extends React.Component {
       <div className="cart-component">
         <h1>Your Cart</h1>
         <div className="cart-and-info">
-          {this.props.cart ? (
+          {this.props.cart[0] ? (
             <div className="cart">
               <div className="pending-products">
                 {this.props.cart.map(item => (
@@ -62,7 +62,7 @@ export class ShoppingCart extends React.Component {
                       <h3>{`$${item.product.price}`}</h3>
                       <div className="pending-quantity">
                         {item.quantity <= 1 ? (
-                           <button disabled className="button-inactive">
+                          <button disabled className="button-inactive">
                             -
                           </button>
                         ) : (
@@ -72,19 +72,18 @@ export class ShoppingCart extends React.Component {
                         )}{' '}
                         <h3>{`qnt: ${item.quantity}`}</h3>
                         {item.quantity >= item.product.inventory ? (
-                        <button disabled className="button-inactive">
-                          +
-                        </button>
-                      ) : (
-                        <button onClick={() => this.modQuant(item, 1)}>
-                          +
-                        </button>
-                      )}
+                          <button disabled className="button-inactive">
+                            +
+                          </button>
+                        ) : (
+                          <button onClick={() => this.modQuant(item, 1)}>
+                            +
+                          </button>
+                        )}
                         <button onClick={() => this.handleRemove(item)}>
                           remove
                         </button>
                       </div>
-
                     </div>
                   </div>
                 ))}
@@ -97,10 +96,14 @@ export class ShoppingCart extends React.Component {
               </div>
             </div>
           ) : (
-            <h2>Shopping cart is empty</h2>
+            <div>
+              <h2 className="empty-cart-msg">Shopping cart is empty!</h2>
+              <Link className="peruse-button" to="/products">
+                Peruse Our Noodles
+              </Link>
+            </div>
           )}
         </div>
-
       </div>
     )
   }

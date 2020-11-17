@@ -54,6 +54,14 @@ button {
   box-shadow: 2px 2px 2px black;
 }
 
+button:hover {
+  background-color: #afd1be;
+}
+
+a:hover {
+  color: #67281f;
+}
+
 /* CART */
 
 .cart-component {
@@ -88,6 +96,9 @@ button {
   background-color: #1b3f3a;
   border-radius: 10px;
   box-shadow: 2px 2px 6px #683831;
+  max-width: 500px;
+  min-width: 400px;
+  padding: 10px;
 }
 
 .single-pending button {
@@ -118,7 +129,7 @@ button {
 }
 
 .checkout-button {
-  background-color: #683831;
+  background-color: #67281f;
   border: none;
   padding: 15px;
   color: rgba(253, 248, 235, 1);
@@ -127,6 +138,21 @@ button {
   border-radius: 10px;
   box-shadow: 2px 2px 6px rgba(253, 248, 235, 1);
   margin: 10px;
+}
+
+.empty-cart-msg {
+  margin: 50px;
+}
+
+@media (max-width: 600px) {
+  .cart-and-info {
+    flex-direction: column;
+  }
+}
+
+.checkout-button:hover {
+  color: rgba(253, 248, 235, 1);
+  background-color: #afd1be;
 }
 
 .single-pending h3 {
@@ -179,6 +205,8 @@ button {
     rgba(253, 248, 235, 1)
   );
   align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 nav a {
@@ -190,6 +218,15 @@ nav a {
   width: 180px;
 }
 
+@media (max-width: 600px) {
+  .my-links {
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 /* WELCOME */
 .welcome {
   display: flex;
@@ -199,14 +236,15 @@ nav a {
   padding: 0px 30px 0px 30px;
 }
 .welcome-img {
-  max-width: 800px;
-  height: auto;
+  max-width: 600px;
+  flex: 0 0 50%;
 }
 
 .welcome-text {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 0 50%;
 }
 
 .welcome h1 {
@@ -224,6 +262,9 @@ nav a {
   border-radius: 10px;
   box-shadow: 2px 2px 6px #683831;
   margin: 20px;
+}
+
+@media (max-width: 600px) {
 }
 
 /* ALL PRODUCTS */
@@ -256,7 +297,11 @@ nav a {
   border-radius: 15px;
   box-shadow: 2px 2px 6px #683831;
   width: 280px;
-  height: 300px;
+  height: 350px;
+}
+
+.product button:hover {
+  background-color: #1b3f3a;
 }
 
 /* SINGLE PRODUCT */
@@ -313,6 +358,18 @@ nav a {
 
 .checkout-component {
   padding: 30px;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 600px) {
+  .checkout {
+    flex-direction: column;
+  }
 }
 
 /*ORDER HISTORY*/

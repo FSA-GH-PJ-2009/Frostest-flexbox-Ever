@@ -182,12 +182,14 @@ class Checkout extends Component {
           ) : (
             <div>
               <h2>Please login or sign up to complete purchase</h2>
-              <button type="submit" onClick={this.openLogin}>
-                Login
-              </button>
-              <button type="submit" onClick={this.openSignup}>
-                Sign Up
-              </button>
+              <div className="login-buttons">
+                <button type="submit" onClick={this.openLogin}>
+                  Login
+                </button>
+                <button type="submit" onClick={this.openSignup}>
+                  Sign Up
+                </button>
+              </div>
               {this.state.login ? <Login /> : ''}
               {this.state.signUp ? <Signup /> : ''}
             </div>

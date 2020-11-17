@@ -388,6 +388,7 @@ nav a {
   height: 180px;
   width: 180px;
   border-radius: 15px;
+  margin: 5px;
 }
 
 .history-item > h6 {
@@ -416,7 +417,7 @@ nav a {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 10px;
   border-radius: 15px;
   box-shadow: 2px 2px 6px #683831;
@@ -445,6 +446,7 @@ nav a {
   margin-right: auto;
 }
 
+/*
 .history-item {
   background-color: #afd1be;
   display: flex;
@@ -457,3 +459,4 @@ nav a {
   width: 400px;
   height: 200px;
 }
+*/
